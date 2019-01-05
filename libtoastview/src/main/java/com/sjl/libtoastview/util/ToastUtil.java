@@ -50,26 +50,28 @@ public class ToastUtil {
         toastViewMap.remove(activity);
     }
 
-    public static void showToast(Activity activity,String msg) {
-        showToast(activity,msg, Gravity.BOTTOM, 0, 200);
+    public static void showToast(String msg) {
+        showToast(msg, Gravity.BOTTOM, 0, 200);
     }
 
-    public static void showToast(Activity activity,String msg, int gravity, int offsetX, int offsetY) {
+    public static void showToast(String msg, int gravity, int offsetX, int offsetY) {
+        Activity activity = AppInit.getInstance().getTopActivity();
         if (activity == null) {
-            throw new RuntimeException("请初始化PlatformInit");
+            throw new RuntimeException("请初始化AppInit");
         }
         ToastView toastView = getToastView(activity, 1, gravity, offsetX, offsetY);
         toastView.setText(msg);
         toastView.show();
     }
 
-    public static void showToast(Activity activity,View view) {
-        showToast(activity,view, Gravity.BOTTOM, 0, 200);
+    public static void showToast(View view) {
+        showToast(view, Gravity.BOTTOM, 0, 200);
     }
 
-    public static void showToast(Activity activity,View view, int gravity, int offsetX, int offsetY) {
+    public static void showToast(View view, int gravity, int offsetX, int offsetY) {
+        Activity activity = AppInit.getInstance().getTopActivity();
         if (activity == null) {
-            throw new RuntimeException("请初始化PlatformInit");
+            throw new RuntimeException("请初始化AppInit");
         }
         ToastView toastView = getToastView(activity, 2, gravity, offsetX, offsetY);
         toastView.setContentView(view);
@@ -108,6 +110,5 @@ public class ToastUtil {
                     offsetX == that.offsetX &&
                     offsetY == that.offsetY;
         }
-
     }
 }
