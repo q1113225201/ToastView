@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sjl.libtoastview.util.ToastUtil;
+import com.sjl.libtoastview.util.ToastViewUtil;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_toast_msg_gravity).setOnClickListener(this);
         findViewById(R.id.btn_toast_view).setOnClickListener(this);
         findViewById(R.id.btn_toast_view_gravity).setOnClickListener(this);
+        findViewById(R.id.btn_toast_system).setOnClickListener(this);
     }
 
     private int cnt = 0;
@@ -33,16 +34,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cnt++;
         switch (v.getId()) {
             case R.id.btn_toast_msg:
-                ToastUtil.showToast("cnt=" + cnt);
+                ToastViewUtil.showToast("cnt=" + cnt);
                 break;
             case R.id.btn_toast_msg_gravity:
-                ToastUtil.showToast("cnt=" + cnt, Gravity.CENTER, 0, 0);
+                ToastViewUtil.showToast("cnt=" + cnt, Gravity.CENTER, 0, 0);
                 break;
             case R.id.btn_toast_view:
-                ToastUtil.showToast(buildView());
+                ToastViewUtil.showToast(buildView());
                 break;
             case R.id.btn_toast_view_gravity:
-                ToastUtil.showToast(buildView(), Gravity.CENTER, 200, 0);
+                ToastViewUtil.showToast(buildView(), Gravity.CENTER, 200, 0);
+                break;
+            case R.id.btn_toast_system:
+                ToastUtil.showToast("cnt=" + cnt);
                 break;
         }
     }

@@ -17,7 +17,7 @@ import java.util.Map;
  * @author 林zero
  * @date 2019/1/5
  */
-public class ToastUtil {
+public class ToastViewUtil {
     private static Map<Activity, List<ToastViewValue>> toastViewMap = new HashMap<>();
 
     /**

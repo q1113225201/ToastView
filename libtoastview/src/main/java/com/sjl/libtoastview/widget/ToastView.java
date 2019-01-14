@@ -1,13 +1,8 @@
 package com.sjl.libtoastview.widget;
 
 import android.app.Activity;
-import android.app.AppOpsManager;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sjl.libtoastview.R;
+import com.sjl.libtoastview.util.Util;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -82,7 +75,7 @@ public class ToastView {
     }
 
     private void initToast() {
-        if (isNotificationEnabled(activity)) {
+        if (Util.isNotificationEnabled(activity)) {
             if (textToast == null) {
                 textToast = Toast.makeText(activity, "", duration);
                 textToast.setDuration(duration);
@@ -111,7 +104,7 @@ public class ToastView {
     public void show() {
         initToast();
         startTimer();
-        if (isNotificationEnabled(activity)) {
+        if (Util.isNotificationEnabled(activity)) {
             if (contentView != null) {
                 setCustomView();
                 viewToast.show();
@@ -154,7 +147,7 @@ public class ToastView {
             timer.cancel();
             timer = null;
         }
-        if(timerTask!=null){
+        if (timerTask != null) {
             timerTask.cancel();
             timerTask = null;
         }
@@ -181,31 +174,6 @@ public class ToastView {
         }
         if (textToast != null) {
             textToast.cancel();
-        }
-    }
-
-    /**
-     * 检查通知栏权限有没有开启
-     */
-    public static boolean isNotificationEnabled(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).areNotificationsEnabled();
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-            ApplicationInfo appInfo = context.getApplicationInfo();
-            String pkg = context.getApplicationContext().getPackageName();
-            int uid = appInfo.uid;
-            try {
-                Class<?> appOpsClass = Class.forName(AppOpsManager.class.getName());
-                Method checkOpNoThrowMethod = appOpsClass.getMethod("checkOpNoThrow", Integer.TYPE, Integer.TYPE, String.class);
-                Field opPostNotificationValue = appOpsClass.getDeclaredField("OP_POST_NOTIFICATION");
-                int value = (Integer) opPostNotificationValue.get(Integer.class);
-                return (Integer) checkOpNoThrowMethod.invoke(appOps, value, uid, pkg) == 0;
-            } catch (NoSuchMethodException | NoSuchFieldException | InvocationTargetException | IllegalAccessException | RuntimeException | ClassNotFoundException ignored) {
-                return true;
-            }
-        } else {
-            return true;
         }
     }
 

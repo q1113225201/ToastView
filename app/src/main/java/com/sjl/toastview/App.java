@@ -11,9 +11,16 @@ import com.sjl.libtoastview.util.AppInit;
  * @date 2019/1/5
  */
 public class App extends Application {
+    private static App app;
+
+    public static App getApp() {
+        return app;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+        app = this;
         AppInit.getInstance().init(this);
     }
 }

@@ -56,7 +56,7 @@ public class AppInit {
 
             @Override
             public void onActivityDestroyed(Activity activity) {
-                ToastUtil.removeToastView(activity);
+                ToastViewUtil.removeToastView(activity);
             }
         });
     }
