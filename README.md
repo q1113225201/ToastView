@@ -16,11 +16,12 @@
 
 优点：无需权限在页面上显示完全没问题；
 
-详见博客
+[详见博客](https://blog.csdn.net/q1113225201/article/details/86484463)
 
 ## 依赖接入
+
 ```
-    allprojects {
+	allprojects {
 		repositories {
 			...
 			maven { url 'https://jitpack.io' }
@@ -28,7 +29,7 @@
 	}
 ```
 ```
-    dependencies {
+	dependencies {
 	        implementation 'com.github.q1113225201:ToastView:1.0.0'
 	}
 ```
