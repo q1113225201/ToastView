@@ -22,8 +22,9 @@ public class ToastViewUtil {
 
     /**
      * 获取
+     *
      * @param activity
-     * @param type 1 文字土司 2 视图土司
+     * @param type     1 文字土司 2 视图土司
      * @param gravity
      * @param offsetX
      * @param offsetY
@@ -58,11 +59,7 @@ public class ToastViewUtil {
     }
 
     public static void showToast(String msg, int gravity, int offsetX, int offsetY) {
-        Activity activity = AppInit.getInstance().getTopActivity();
-        if (activity == null) {
-            throw new RuntimeException("请初始化AppInit");
-        }
-        ToastView toastView = getToastView(activity, 1, gravity, offsetX, offsetY);
+        ToastView toastView = getToastView(getActivity(), 1, gravity, offsetX, offsetY);
         toastView.setText(msg);
         toastView.show();
     }
@@ -72,13 +69,18 @@ public class ToastViewUtil {
     }
 
     public static void showToast(View view, int gravity, int offsetX, int offsetY) {
+        ToastView toastView = getToastView(getActivity(), 2, gravity, offsetX, offsetY);
+        toastView.setContentView(view);
+        toastView.show();
+    }
+
+    private static Activity getActivity() {
         Activity activity = AppInit.getInstance().getTopActivity();
         if (activity == null) {
             throw new RuntimeException("请初始化AppInit");
+        } else {
+            return activity;
         }
-        ToastView toastView = getToastView(activity, 2, gravity, offsetX, offsetY);
-        toastView.setContentView(view);
-        toastView.show();
     }
 
     static class ToastViewValue {

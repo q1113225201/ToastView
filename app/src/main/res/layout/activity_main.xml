@@ -34,4 +34,22 @@
         android:layout_height="wrap_content"
         android:text="toast system" />
 
+    <Button
+        android:id="@+id/btn_toast_system_gravity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="toast system gravity" />
+
+    <Button
+        android:id="@+id/btn_toast_system_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="toast system view" />
+
+    <Button
+        android:id="@+id/btn_toast_system_view_gravity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="toast system view gravity" />
+
 </LinearLayout>

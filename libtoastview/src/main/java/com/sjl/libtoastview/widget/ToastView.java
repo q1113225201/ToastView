@@ -3,6 +3,7 @@ package com.sjl.libtoastview.widget;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ public class ToastView {
      */
     private PopupWindow popupWindow;
     /**
-     * PopupWindow内容容器
+     * 内容容器，防止出现一跳一跳的效果
      */
     private LinearLayout contentParentView;
     /**
@@ -55,6 +56,19 @@ public class ToastView {
     private int offsetY = 200;
     private int duration;
     private CharSequence text;
+    /**
+     * 计时
+     */
+    private Timer timer;
+    private TimerTask timerTask;
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            ToastView.this.cancel();
+            handler.removeCallbacks(runnable);
+        }
+    };
 
     private Activity activity;
 
@@ -97,12 +111,12 @@ public class ToastView {
         if (Util.isNotificationEnabled(activity)) {
             if (contentView != null) {
                 setCustomView();
-                toast.show();
+                toast.setView(contentParentView);
             } else {
                 toast.setGravity(gravity, offsetX, offsetY);
                 toast.setText(text);
-                toast.show();
             }
+            toast.show();
         } else {
             if (contentView != null) {
                 setCustomView();
@@ -117,21 +131,24 @@ public class ToastView {
         }
     }
 
-    private Timer timer;
-    private TimerTask timerTask;
-
+    /**
+     * 开始计时
+     */
     private void startTimer() {
         stopTimer();
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                ToastView.this.cancel();
+                handler.post(runnable);
             }
         };
         timer.schedule(timerTask, duration == Toast.LENGTH_SHORT ? LENGTH_SHORT : LENGTH_LONG);
     }
 
+    /**
+     * 结束计时
+     */
     private void stopTimer() {
         if (timer != null) {
             timer.cancel();
@@ -154,6 +171,9 @@ public class ToastView {
         contentParentView.addView(contentView);
     }
 
+    /**
+     * 取消ToastView显示
+     */
     public void cancel() {
         stopTimer();
         if (popupWindow != null) {
