@@ -28,13 +28,9 @@ public class ToastView {
     private static final int LENGTH_LONG = 3500;
     private static final int LENGTH_SHORT = 2000;
     /**
-     * 文字toast
+     * toast
      */
-    private Toast textToast;
-    /**
-     * 视图toast
-     */
-    private Toast viewToast;
+    private Toast toast;
     /**
      * 无权限时用PopupWindow
      */
@@ -76,16 +72,10 @@ public class ToastView {
 
     private void initToast() {
         if (Util.isNotificationEnabled(activity)) {
-            if (textToast == null) {
-                textToast = Toast.makeText(activity, "", duration);
-                textToast.setDuration(duration);
-                textToast.setGravity(gravity, offsetX, offsetY);
-            }
-            if (viewToast == null) {
-                viewToast = Toast.makeText(activity, "", duration);
-                viewToast.setDuration(duration);
-                viewToast.setGravity(gravity, offsetX, offsetY);
-                viewToast.setView(contentParentView);
+            if (toast == null) {
+                toast = Toast.makeText(activity, "", duration);
+                toast.setDuration(duration);
+                toast.setGravity(gravity, offsetX, offsetY);
             }
         } else if (popupWindow == null) {
             popupWindow = new PopupWindow(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -107,11 +97,11 @@ public class ToastView {
         if (Util.isNotificationEnabled(activity)) {
             if (contentView != null) {
                 setCustomView();
-                viewToast.show();
+                toast.show();
             } else {
-                textToast.setGravity(gravity, offsetX, offsetY);
-                textToast.setText(text);
-                textToast.show();
+                toast.setGravity(gravity, offsetX, offsetY);
+                toast.setText(text);
+                toast.show();
             }
         } else {
             if (contentView != null) {
@@ -169,11 +159,8 @@ public class ToastView {
         if (popupWindow != null) {
             popupWindow.dismiss();
         }
-        if (viewToast != null) {
-            viewToast.cancel();
-        }
-        if (textToast != null) {
-            textToast.cancel();
+        if (toast != null) {
+            toast.cancel();
         }
     }
 

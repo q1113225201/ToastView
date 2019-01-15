@@ -22,8 +22,11 @@ public class ToastViewUtil {
 
     /**
      * 获取
-     *
      * @param activity
+     * @param type 1 文字土司 2 视图土司
+     * @param gravity
+     * @param offsetX
+     * @param offsetY
      * @return
      */
     private static ToastView getToastView(Activity activity, int type, int gravity, int offsetX, int offsetY) {

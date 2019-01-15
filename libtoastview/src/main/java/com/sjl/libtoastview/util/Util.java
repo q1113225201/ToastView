@@ -48,7 +48,8 @@ public class Util {
     private static Object iNotificationManagerObject;
 
     /**
-     * 显示土司
+     * 显示
+     * 反射代理强制认定为系统Toast
      *
      * @param context
      * @param toast
