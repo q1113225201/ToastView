@@ -109,19 +109,25 @@ public class ToastView {
         initToast();
         startTimer();
         if (Util.isNotificationEnabled(activity)) {
+            //有权限使用原生Toast
             if (contentView != null) {
+                //视图
                 setCustomView();
                 toast.setView(contentParentView);
             } else {
+                //text
                 toast.setGravity(gravity, offsetX, offsetY);
                 toast.setText(text);
             }
             toast.show();
         } else {
+            //无权限使用PopupWindow
             if (contentView != null) {
+                //视图
                 setCustomView();
                 popupWindow.setContentView(contentParentView);
             } else {
+                //text
                 ((TextView) defaultView.findViewById(R.id.tv_default_text)).setText(text);
                 popupWindow.setContentView(defaultView);
             }
