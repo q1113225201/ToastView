@@ -51,6 +51,11 @@ public class ToastViewUtil {
     }
 
     public static void removeToastView(Activity activity) {
+        if(toastViewMap.containsKey(activity)) {
+            for (ToastViewValue item : toastViewMap.get(activity)) {
+                item.getToastView().cancel();
+            }
+        }
         toastViewMap.remove(activity);
     }
 
